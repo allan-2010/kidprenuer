@@ -1,0 +1,36 @@
+<script>
+  const form = document.getElementById('ideaForm');
+  const ideasContainer = document.getElementById('ideasContainer');
+
+  // Load saved ideas when the page loads
+  window.onload = function() {
+    const savedIdeas = JSON.parse(localStorage.getItem('ideas')) || [];
+    savedIdeas.forEach(idea => {
+      displayIdea(idea.title, idea.problem);
+    });
+  };
+
+  // Form submission
+  form.addEventListener('submit', function(e) {
+    e.preventDefault();
+
+    const title = document.getElementById('title').value;
+    const problem = document.getElementById('problem').value;
+
+    // Save to localStorage
+    let ideas = JSON.parse(localStorage.getItem('ideas')) || [];
+    ideas.push({ title, problem });
+    localStorage.setItem('ideas', JSON.stringify(ideas));
+
+    // Display idea
+    displayIdea(title, problem);
+
+    form.reset();
+  });
+
+  // Function to display idea
+  function displayIdea(title, problem) {
+    const ideaDiv = document.createElement('div');
+    ideaDiv.classList.add('idea');
+    ideaDiv.innerHTML = `<h3>${title}</h3><p>${problem}</p>`;
+    ideasContainer.appendChild
